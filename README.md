@@ -69,8 +69,8 @@ Ajusta a velocidade alvo com base na distância do veículo à frente:
 ```
 FalconPipeline.circ          → Circuito completo no Logisim-Evolution
 codigosassembly.txt          → Código Assembly dos dois módulos
-InstructionsCasos1_5.hex     → Binário do Módulo 1 (SFI)
-InstructionsCasos6_10.hex    → Binário do Módulo 2 (CVA)
+InstructionsCasos1_5.hex     → Hexadecimal do Módulo 1 (SFI)
+InstructionsCasos6_10.hex    → Hexadecimal do Módulo 2 (CVA)
 falcon8_assembler_v3.html    → Montador Falcon-8 (abre no navegador)
 ```
 
