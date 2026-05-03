@@ -1,0 +1,82 @@
+CASOS 1_5-
+
+START:
+    ADDI R1, R0, 16
+    LW R2, 0(R1)
+    LW R3, 1(R1)
+    LW R4, 2(R1)
+    LW R5, 3(R1)
+    SLT R6, R2, R4
+    BEQ R6, R0, 10
+    SLT R6, R5, R3
+    BEQ R6, R0, 4
+
+EMERGENCIA:
+    ADDI R6, R0, 2
+    SW R6, 16(R1)
+    SW R6, 17(R1)
+    BEQ R0, R0, -14
+
+ALERTA:
+    ADDI R6, R0, 1
+    SW R6, 16(R1)
+    SW R6, 17(R1)
+    BEQ R0, R0, -18
+
+NORMAL:
+    SW R0, 16(R1)
+    SW R0, 17(R1)
+    BEQ R0, R0, -21
+
+
+
+
+
+
+
+CASOS 6_10(VELOCIDADE ADAPTATIVA)-
+
+inicio_cva:
+    ADDI R1, R0, 21
+    LW   R2, 0(R1)          # R2 = dist_frente (0x15)
+    ADDI R1, R0, 20
+    LW   R3, 0(R1)          # R3 = vel_frente (0x14)
+    ADDI R1, R0, 17
+    LW   R6, 0(R1)          # R6 = vel_atual (0x11)
+
+    ADDI R4, R0, 10
+    BLT  R2, R4, 4    # dist < 10 → reduzir
+
+    ADDI R4, R0, 20
+    BLT  R4, R2, 5    # 20 < dist → aumentar
+
+    # manter: vel_alvo = vel_frente
+    ADDI R6, R3, 0
+    BEQ  R0, R0, 9
+
+reduzir:
+    ADDI R4, R0, 1
+    SRL  R6, R6, R4         # R6 = vel >> 1
+    BEQ  R0, R0, 6
+
+aumentar:
+    SLLI R6, R6, 1          # R6 = vel << 1
+    ADDI R4, R0, 15
+    SLLI R4, R4, 3          # R4 = 15 << 3 = 120
+    BLT  R6, R4, 2       # vel < 120 → ok
+    BEQ  R6, R4, 1      # vel == 120 → ok
+    ADDI R6, R4, 0          # cap: R6 = 120
+
+gravar_cva:
+    SLLI R5, R6, 1          # R5 = vel*2
+    ADDI R4, R0, 3
+    SRL  R4, R6, R4         # R4 = vel/8
+    ADD  R5, R5, R4         # R5 = cmd = vel*2 + vel/8
+
+    ADDI R1, R0, 17
+    SLLI R1, R1, 1          # R1 = 34 = 0x22
+    SW   R5, 0(R1)          # Mem[0x22] = cmd
+    ADDI R1, R1, 1          # R1 = 35 = 0x23
+    SW   R6, 0(R1)          # Mem[0x23] = vel_alvo
+
+    BEQ  R0, R0, -32
