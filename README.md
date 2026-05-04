@@ -72,6 +72,7 @@ codigosassembly.txt          → Código Assembly dos dois módulos
 InstructionsCasos1_5.hex     → Hexadecimal do Módulo 1 (SFI)
 InstructionsCasos6_10.hex    → Hexadecimal do Módulo 2 (CVA)
 falcon8_assembler_v3.html    → Montador Falcon-8 (abre no navegador)
+Documentação Técnica do Datapath — Falcon-8 Pipeline.pdf → Documentação Técnica do Datapath
 ```
 
 ---
